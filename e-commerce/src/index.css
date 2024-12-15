@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Tw Cen MT";
+  src: url("/public/Tw Cen MT.ttf") format("truetype"); /* Direct reference to public folder */
+  font-weight: 600;
+}
+
+
+
