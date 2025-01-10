@@ -7,7 +7,7 @@ export const mens_kurta=[
         "discountedPrice": 499,
         "price": 1499,
         "discountPersent": 66,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -35,7 +35,7 @@ export const mens_kurta=[
         "discountedPrice": 799,
         "price": 2499,
         "discountPersent": 68,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -63,7 +63,7 @@ export const mens_kurta=[
         "discountedPrice": 399,
         "price": 1499,
         "discountPersent": 73,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -91,7 +91,7 @@ export const mens_kurta=[
         "discountedPrice": 474,
         "price": 1999,
         "discountPersent": 76,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -119,7 +119,7 @@ export const mens_kurta=[
         "discountedPrice": 524,
         "price": 1049,
         "discountPersent": 50,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -147,7 +147,7 @@ export const mens_kurta=[
         "discountedPrice": 499,
         "price": 1499,
         "discountPersent": 66,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -175,7 +175,7 @@ export const mens_kurta=[
         "discountedPrice": 277,
         "price": 999,
         "discountPersent": 72,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -203,7 +203,7 @@ export const mens_kurta=[
         "discountedPrice": 765,
         "price": 1049,
         "discountPersent": 27,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -231,7 +231,7 @@ export const mens_kurta=[
         "discountedPrice": 499,
         "price": 1599,
         "discountPersent": 68,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -259,7 +259,7 @@ export const mens_kurta=[
         "discountedPrice": 429,
         "price": 999,        
         "discountPersent": 57,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -287,7 +287,7 @@ export const mens_kurta=[
         "discountedPrice": 729,
         "price": 909,        
         "discountPersent": 27,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -315,7 +315,7 @@ export const mens_kurta=[
         "discountedPrice": 449,
         "price": 1749,
         "discountPersent": 74,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -343,7 +343,7 @@ export const mens_kurta=[
         "discountedPrice": 449,
         "price": 1499,
         "discountPersent": 70,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -371,7 +371,7 @@ export const mens_kurta=[
         "discountedPrice": 385,
         "price": 1299,
         "discountPersent": 70,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -399,7 +399,7 @@ export const mens_kurta=[
         "discountedPrice": 395,
         "price": 1495,
         "discountPersent": 73,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -427,7 +427,7 @@ export const mens_kurta=[
         "discountedPrice": 399,
         "price": 1648,
         "discountPersent": 75,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -455,7 +455,7 @@ export const mens_kurta=[
         "discountedPrice": 599,
         "price": 2499,
         "discountPersent": 76,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -483,7 +483,7 @@ export const mens_kurta=[
         "discountedPrice": 629,
         "price": 2499,
         "discountPersent": 74,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -511,7 +511,7 @@ export const mens_kurta=[
         "discountedPrice": 370,
         "price": 1499,
         "discountPersent": 75,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -539,7 +539,7 @@ export const mens_kurta=[
         "discountedPrice": 363,
         "price": 1499,
         "discountPersent": 75,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -567,7 +567,7 @@ export const mens_kurta=[
         "discountedPrice": 629,
         "price": 2499,
         "discountPersent": 74,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -595,7 +595,7 @@ export const mens_kurta=[
         "discountedPrice": 629,
         "price": 2499,
         "discountPersent": 74,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -623,7 +623,7 @@ export const mens_kurta=[
         "discountedPrice": 399,
         "price": 1648,
         "discountPersent": 75,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -651,7 +651,7 @@ export const mens_kurta=[
         "discountedPrice": 499,
         "price": 1499,
         "discountPersent": 66,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -679,7 +679,7 @@ export const mens_kurta=[
         "discountedPrice": 265,
         "price": 1499,
         "discountPersent": 82,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -707,7 +707,7 @@ export const mens_kurta=[
         "discountedPrice": 483,
         "price": 1999,
         "discountPersent": 75,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -735,7 +735,7 @@ export const mens_kurta=[
         "discountedPrice": 499,
         "price": 1499,
         "discountPersent": 66,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -763,7 +763,7 @@ export const mens_kurta=[
         "discountedPrice": 499,
         "price": 1499,
         "discountPersent": 66,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -791,7 +791,7 @@ export const mens_kurta=[
         "discountedPrice": 399,
         "price": 1648,
         "discountPersent": 75,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -819,7 +819,7 @@ export const mens_kurta=[
         "discountedPrice": 449,
         "price": 1749,
         "discountPersent": 74,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -847,7 +847,7 @@ export const mens_kurta=[
         "discountedPrice": 468,
         "price": 1599,
         "discountPersent": 70,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -875,7 +875,7 @@ export const mens_kurta=[
         "discountedPrice": 499,
         "price": 1749,
         "discountPersent": 71,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -903,7 +903,7 @@ export const mens_kurta=[
         "discountedPrice": 467,
         "price": 2199,
         "discountPersent": 78,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -931,7 +931,7 @@ export const mens_kurta=[
         "discountedPrice": 810,
         "price": 2499,
         "discountPersent": 67,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -959,7 +959,7 @@ export const mens_kurta=[
         "discountedPrice": 478,
         "price": 1279,
         "discountPersent": 62,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -987,7 +987,7 @@ export const mens_kurta=[
         "discountedPrice": 399,
         "price": 1648,
         "discountPersent": 75,
-        "size": [
+        "sizess": [
             {
               "name": "S",
               "quantity": 20
@@ -1015,7 +1015,7 @@ export const mens_kurta=[
         "discountedPrice": 948,
         "price": 1299,
         "discountPersent": 27,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -1043,7 +1043,7 @@ export const mens_kurta=[
         "discountedPrice": 994,
         "price": 2499,
         "discountPersent": 60,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -1071,7 +1071,7 @@ export const mens_kurta=[
         "discountedPrice": 362,
         "price": 1499,
         "discountPersent": 75,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20
@@ -1099,7 +1099,7 @@ export const mens_kurta=[
         "discountedPrice": 393,
         "price": 1599,
         "discountPersent": 75,
-        "size": [
+        "sizes": [
             {
               "name": "S",
               "quantity": 20

@@ -71,6 +71,7 @@ public class ProductServiceImplementation implements ProductService {
 		product.setColor(req.getColor());
 		product.setDescription(req.getDescription());
 		product.setDiscountedPrice(req.getDiscountedPrice());
+		System.out.println("==========DISCOUNTED PERSENT=============="+req.getDiscountedPercent());
 		product.setDiscountPersent(req.getDiscountedPercent());
 		product.setImageUrl(req.getImageUrl());
 		product.setBrand(req.getBrand());

@@ -39,6 +39,7 @@ export const singleFilter = [
     id: "price",
     name: "Price",
     options: [
+      { value: "0-9999", label: "₹0 To ₹9999" },
       { value: "159-399", label: "₹159 To ₹399" },
       { value: "399-999", label: "₹399 To ₹999" },
       { value: "999-1999", label: "₹999 To ₹1999" },

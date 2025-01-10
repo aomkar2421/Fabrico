@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -29,7 +29,9 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { findProducts } from "../../../State/Product/Action.js";
 
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
@@ -45,6 +47,19 @@ export default function Product() {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const param = useParams();
+  const dispatch = useDispatch();
+  const {product} = useSelector(store=>store);
+
+  const decodedQueryString = decodeURIComponent(location.search);
+  const searchParamms = new URLSearchParams(decodedQueryString);
+  const colorValue = searchParamms.get("color")
+  const sizeValue = searchParamms.get("size")
+  const priceValue = searchParamms.get("price")
+  const disccount = searchParamms.get("disccount")
+  const sortValue = searchParamms.get("sort");
+  const pageNumber = searchParamms.get("page") || 1;
+  const stock = searchParamms.get("stock")
 
   const handleFilter = (value, sectionId) => {
     const searchParams = new URLSearchParams(location.search);
@@ -78,6 +93,33 @@ export default function Product() {
     const query = searchParams.toString();
     navigate({ search: `?${query}` });
   };
+
+  useEffect(() => {
+    const [minPrice, maxPrice] = priceValue === null ? [0, 0] : priceValue.split("-").map(Number);
+
+    const data={
+      category: param.lavelThree,
+      colors:colorValue || [],
+      sizes:sizeValue || [],
+      minPrice:minPrice || 0,
+      maxPrice:maxPrice || 9999,
+      minDiscount: disccount || 0,
+      sort:sortValue || "price_low",
+      pageNumber: pageNumber-1, 
+      pageSize:10,
+      stock:stock
+    }
+    dispatch(findProducts(data));
+
+  }, [param.lavelThree,
+    colorValue,
+    sizeValue,
+    priceValue,
+    disccount,
+    sortValue,
+    pageNumber,
+    stock
+  ])
 
 
   return (
@@ -325,7 +367,7 @@ export default function Product() {
                             {section.options.map((option, optionIdx) => (
                               <>
                                 <FormControlLabel
-                                  onChange={(e)=>{handleRadioFilterChange(e, section.id)}}
+                                  onChange={(e) => { handleRadioFilterChange(e, section.id) }}
                                   value={option.value}
                                   control={<Radio />}
                                   label={option.label}
@@ -343,7 +385,7 @@ export default function Product() {
               {/* Product grid */}
               <div className="lg:col-span-4 w-full">
                 <div className="flex flex-wrap justify-center bg-white py-5">
-                  {mens_kurta.map((item) => (
+                  {product.products && product.products?.content?.map((item) => (
                     <ProductCard product={item} />
                   ))}
                 </div>
