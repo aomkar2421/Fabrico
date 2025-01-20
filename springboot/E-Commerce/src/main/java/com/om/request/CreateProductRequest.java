@@ -15,7 +15,7 @@ public class CreateProductRequest {
 	
 	private int discountedPrice;
 	
-	private int discountedPersent;
+	private int discountPersent;
 	
 	private int quantity;
 	
@@ -66,11 +66,15 @@ public class CreateProductRequest {
 	}
 
 	public int getDiscountedPercent() {
-		return discountedPersent;
+		return discountPersent;
 	}
 
-	public void setDiscountedPercent(int discountedPersent) {
-		this.discountedPersent = discountedPersent;
+	public void setDiscountedPercent(int discountPersent) {
+		discountPersent = (int) (((double) (getPrice() - getDiscountedPrice()) / getPrice()) * 100);
+		System.out.println();
+		System.out.println("========DISCOUNT PERSENT IS : "+discountPersent+"===========");
+		System.out.println();
+//		this.discountPersent = discountPersent;
 	}
 
 	public int getQuantity() {
@@ -136,7 +140,5 @@ public class CreateProductRequest {
 	public void setThirdLavelCategory(String thirdLavelCategory) {
 		this.thirdLavelCategory = thirdLavelCategory;
 	}
-
-		
 
 }

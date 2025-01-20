@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CartItem from './CartItem'
 import { Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCart } from '../../../State/Cart/Action';
 
 const Cart = () => {
   const navigate = useNavigate();
+  const {cart} = useSelector(store => store);
+  const dispatch = useDispatch();
+
+  useEffect( () => {
+    dispatch(getCart());
+  }, [cart.updateCartItem, cart.deleteCartItem] )
 
   const handleCheckout = () =>{
     navigate('/checkout?step=2')
@@ -14,7 +22,7 @@ const Cart = () => {
     <div>
       <div className="lg:grid grid-cols-3 lg:px-16 relative">
         <div className="col-span-2">
-          {[1,1,1].map((item)=> <CartItem/> )}
+          {cart.cart?.cartitems.map((item)=> <CartItem item={item} /> )}
         </div>
         <div className="px-5 sticky top-0 h-[100vh] mt-5 lg:mt-0">
           <div className="border p-4">
@@ -23,11 +31,11 @@ const Cart = () => {
             <div className="space-y-3 font-semibold">
               <div className="flex justify-between pt-3 text-black">
                 <span>Price</span>
-                <span>₹4697</span>
+                <span>₹{cart.cart?.totalPrice}</span>
               </div>
               <div className="flex justify-between pt-3 text-black">
                 <span>Discount</span>
-                <span>-₹3419</span>
+                <span>-₹{cart.cart?.discounte}</span>
               </div>
               <div className="flex justify-between pt-3 text-black">
                 <span>Deliver Charges</span>
@@ -36,7 +44,7 @@ const Cart = () => {
               <hr/>
               <div className="flex justify-between pt-3 text-black font-bold mb-10">
                 <span>Total Amount</span>
-                <span>₹1278</span>
+                <span>₹{cart.cart?.totalDiscountedPrice}</span>
               </div>
               <Button
               onClick={handleCheckout}

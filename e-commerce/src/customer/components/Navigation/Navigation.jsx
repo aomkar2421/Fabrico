@@ -261,7 +261,7 @@ export default function Navigation() {
               <div className="ml-4 flex lg:ml-0">
                 
                   <span className="sr-only">Your Company</span>
-                  <img
+                  <img  onClick={()=> navigate('/') }
                     src="https://res.cloudinary.com/ddkso1wxi/image/upload/v1675919455/Logo/Copy_of_Zosh_Academy_nblljp.png"
                     alt="Shopwithzosh"
                     className="h-8 w-8 mr-2"
@@ -468,7 +468,7 @@ export default function Navigation() {
                   <Button
                     className="group -m-2 flex items-center p-2"
                   >
-                    <ShoppingBagIcon
+                    <ShoppingBagIcon  onClick={()=> navigate('/cart') }
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
