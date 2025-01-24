@@ -22,7 +22,7 @@ import RedeemIcon from "@mui/icons-material/Redeem";
 import QueueIcon from "@mui/icons-material/Queue";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Dashboard from "./Components/AdminDashboard";
-import CreateProductsForm from "./Components/CreateProductsForm";
+import CreateProductsForm from "./Components/CreateProductForm";
 import ProductsTable from "./Components/ProductsTable";
 import OrdersTable from "./Components/OrdersTable";
 import CustomersTable from "./Components/CustomersTable";
@@ -48,7 +48,7 @@ const Admin = () => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        height: "100%",
+        height: "100vh",
       }}
     >
       <>
@@ -82,14 +82,13 @@ const Admin = () => {
   );
 
   return (
-    <div>
-      <div className="flex h-[100vh]">
+      <div className=" relative flex h-[100vh]">
         <CssBaseline />
-        <div className="w-[15%] border border-gray-300 h-full">
+        <div className="w-[15%] border border-gray-300 h-full fixed top-0">
           {drawer}
         </div>
 
-        <div className="w-[85%] border">
+        <div className="w-[85%] h-full ml-[15%]">
           <Routes>
             <Route path="/" element={<Dashboard />}></Route>
             <Route
@@ -102,7 +101,6 @@ const Admin = () => {
           </Routes>
         </div>
       </div>
-    </div>
   );
 };
 
