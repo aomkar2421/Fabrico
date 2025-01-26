@@ -24,7 +24,7 @@ import {
   TableRow,
 } from "@mui/material";
 
-const OrdersTable = () => {
+const OrdersTableView = () => {
   const dispatch = useDispatch();
 
   const { adminOrder } = useSelector((store) => store);
@@ -55,44 +55,22 @@ const OrdersTable = () => {
     setAnchorEl(newAnchorElArray);
   };
 
-  const handleShippedOrder = (orderId) => {
-    dispatch(shipOrder(orderId));
-    handleClose();
-  };
-
-  const handleConfirmedOrder = (orderId) => {
-    dispatch(confirmOrder(orderId));
-    handleClose();
-  };
-
-  const handleDeliveredOrder = (orderId) => {
-    dispatch(deliveredOrder(orderId));
-    handleClose();
-  };
-
-  const handleDeleteOrder = (orderId) => {
-    dispatch(deleteOrder(orderId));
-  };
-
   return (
-    <div className="p-10">
+    <div className="">
       <Card className="mt-2">
-        <CardHeader title="All Products" />
+        <CardHeader title="Recent Orders" />
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Image</TableCell>
                 <TableCell align="left">Title</TableCell>
-                <TableCell align="left">Id</TableCell>
                 <TableCell align="left">Price</TableCell>
                 <TableCell align="left">Status</TableCell>
-                <TableCell align="left">Update</TableCell>
-                <TableCell align="left">Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {adminOrder?.orders?.map((item, index) => (
+              {adminOrder?.orders?.slice(0,5).map((item, index) => (
                 <TableRow
                   key={item.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -111,7 +89,6 @@ const OrdersTable = () => {
                     ))}
                   </TableCell>
 
-                  <TableCell align="left">{item.id}</TableCell>
                   <TableCell align="left">{item.totalPrice}</TableCell>
                   <TableCell align="left">
                     {" "}
@@ -135,45 +112,6 @@ const OrdersTable = () => {
                     </span>{" "}
                   </TableCell>
 
-                  <TableCell align="left">
-                    <Button
-                      id="basic-button"
-                      aria-haspopup="true"
-                      onClick={(event)=>handleClick(event,index)}
-                      aria-controls={`basic-meanu-${item.id}`}
-                      aria-expanded={Boolean(anchorEl[index])}
-                    >
-                      Status
-                    </Button>
-                    <Menu
-                      id={`basic-menu-${item.id}`}
-                      anchorEl={anchorEl[index]}
-                      open={Boolean(anchorEl[index])}
-                      onClose={()=>handleClose(index)}
-                      MenuListProps={{
-                        "aria-labelledby": "basic-button",
-                      }}
-                    >
-                      <MenuItem onClick={() => handleConfirmedOrder(item.id)}>
-                        CONFIRMED
-                      </MenuItem>
-                      <MenuItem onClick={() => handleShippedOrder(item.id)}>
-                        SHIPPED
-                      </MenuItem>
-                      <MenuItem onClick={() => handleDeliveredOrder(item.id)}>
-                        DELIVERED
-                      </MenuItem>
-                    </Menu>
-                  </TableCell>
-
-                  <TableCell align="left">
-                    <Button
-                      onClick={() => handleDeleteOrder(item.id)}
-                      variant="outlined"
-                    >
-                      Delete
-                    </Button>
-                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -184,4 +122,4 @@ const OrdersTable = () => {
   );
 };
 
-export default OrdersTable;
+export default OrdersTableView;
