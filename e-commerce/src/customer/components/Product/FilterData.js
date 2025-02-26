@@ -7,6 +7,8 @@ export const colors = [
   "pink",
   "green",
   "yellow",
+  "grey",
+  "black"
 ];
 
 export const filters = [

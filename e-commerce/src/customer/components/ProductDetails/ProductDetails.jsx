@@ -430,7 +430,7 @@ export default function ProductDetails() {
         <section>
           <h1 className="my-10 font-semibold text-2xl">Similar Products</h1>
           <div className="flex flex-wrap space-y-5">
-            {mens_kurta.map((item)=> <HomeSectionCard product={item}/> )}
+            {mens_kurta.slice(0,8).map((item)=> <HomeSectionCard product={item}/> )}
           </div>
         </section>
 

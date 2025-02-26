@@ -23,8 +23,10 @@ export const findProducts = (reqData) => async (dispatch) => {
     );
     console.log("====PRODUCTS DATA==== :", data)
     dispatch({ type: FIND_PRODUCTS_SUCCESS, payload: data });
+    return data;
   } catch (error) {
     dispatch({ type: FIND_PRODUCTS_FAILURE, payload: error.message });
+    throw error;
   }
 };
 

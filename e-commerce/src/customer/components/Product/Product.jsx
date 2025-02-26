@@ -51,6 +51,7 @@ export default function Product() {
   const dispatch = useDispatch();
   const {products} = useSelector(store=>store);
 
+
   const decodedQueryString = decodeURIComponent(location.search);
   const searchParamms = new URLSearchParams(decodedQueryString);
   const colorValue = searchParamms.get("color")
