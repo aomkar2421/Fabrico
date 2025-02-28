@@ -38,11 +38,17 @@ public class AdminOrderController {
 		return new ResponseEntity<>(order, HttpStatus.OK);
 	}
 	
-	@PutMapping("/{orderld}/ship")
+	@PutMapping("/{orderld}/shiped")
 	public ResponseEntity<Order> ShippedOrderHandler(@PathVariable Long orderld, @RequestHeader("Authorization") String jwt) throws OrderException {
-	Order order = orderService.shippedOrder(orderld);
-	return new ResponseEntity<>(order, HttpStatus.OK);
+		Order order=orderService.shippedOrder(orderld);
+		return new ResponseEntity<>(order, HttpStatus.OK);
 	}
+	
+//	@PutMapping("/{orderld}/ship")
+//	public ResponseEntity<Order> ShippedOrderHandler(@PathVariable Long orderld, @RequestHeader("Authorization") String jwt) throws OrderException {
+//	Order order = orderService.shippedOrder(orderld);
+//	return new ResponseEntity<>(order, HttpStatus.OK);
+//	}
 	
 	@PutMapping("/{orderld}/deliver")
 	public ResponseEntity<Order> DeliverOrderHandler(@PathVariable Long orderld, @RequestHeader("Authorization") String jwt) throws OrderException {

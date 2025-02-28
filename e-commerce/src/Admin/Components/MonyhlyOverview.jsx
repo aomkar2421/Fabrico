@@ -67,7 +67,7 @@ const renderStats = () => {
 
 const MonyhlyOverview = () => {
     return (
-        <Card sx={{bgcolor:"#242B2E", color:"white"}} >
+        <Card sx={{ position: "relative", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.5)" }}>
             <CardHeader title="Monthly Overview" action={
                 <IconButton size="small">
                     <MoreVertIcon />

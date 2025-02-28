@@ -9,16 +9,16 @@ const TriangleImg = styled("img")({
 })
 
 const TrophyImg = styled("img")({
-    right:36,
+    right:36, 
     bottom:20,
     height:98,
     position:"absolute"
-})
+})            
 
 const Achivement = () => {
   return (
-    <Card sx={{ position: "relative", bgcolor:'#242B2E', color:'white' }}>
-      <CardContent>
+<Card sx={{ position: "relative", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.5)" }}>
+<CardContent>
         <Typography variant="h6" sx={{ letterSpacing: ".25px" }}>
           Shop With Zosh
         </Typography>

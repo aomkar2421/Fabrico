@@ -8,24 +8,26 @@ import ProductsTableView from "../view/ProductTableView";
 
 const AdminDashboard = () => {
   return (
-    <div className="p-10">
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <Achivement />
+    <>
+      <div className="my-10 pb-10 mx-8">
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={12} lg={4}>
+            <Achivement className="shadow-xl shadow-black"/>
+          </Grid>
+          <Grid item xs={12} md={12} lg={8}>
+            <MonyhlyOverview className="shadow-xl shadow-black" />
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={8}>
-          <MonyhlyOverview />
-        </Grid>
-      </Grid>
-      <div className="flex w-full overflow-hidden justify-between mt-10">
-        <div className="shadow-xl shadow-black">
-          <ProductsTableView />
-        </div>
-        <div className="shadow-xl shadow-black">
-          <OrdersTableView />
+        <div className=" my-10 w-full">
+          <div className="shadow-md shadow-black rounded-xl">
+            <ProductsTableView />
+          </div>
+          <div className=" my-10 shadow-md shadow-black rounded-xl">
+            <OrdersTableView />
+          </div>
         </div>
       </div>
-    </div>
+    </> 
   );
 };
 

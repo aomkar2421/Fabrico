@@ -65,16 +65,16 @@ public class CreateProductRequest {
 		this.discountedPrice = discountedPrice;
 	}
 
-	public int getDiscountedPercent() {
+	public int getdiscountPersent() {
 		return discountPersent;
 	}
 
-	public void setDiscountedPercent(int discountPersent) {
+	public void setdiscountPersent(int discountPersent) {
 		discountPersent = (int) (((double) (getPrice() - getDiscountedPrice()) / getPrice()) * 100);
 		System.out.println();
 		System.out.println("========DISCOUNT PERSENT IS : "+discountPersent+"===========");
 		System.out.println();
-//		this.discountPersent = discountPersent;
+		this.discountPersent = discountPersent;
 	}
 
 	public int getQuantity() {

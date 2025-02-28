@@ -38,11 +38,11 @@ import {
     }, [products.deletedProduct]);
   
     return (
-      <div className="bg-[#242B2E]">
+      <div className="">
         <Card className="mt-2">
           <CardHeader title="Recent Products" />
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <Table sx={{ minWidth: 550 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell>Image</TableCell>

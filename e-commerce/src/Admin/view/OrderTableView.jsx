@@ -56,7 +56,7 @@ const OrdersTableView = () => {
   };
 
   return (
-    <div className="">
+    <div className="overflow-hidden">
       <Card className="mt-2">
         <CardHeader title="Recent Orders" />
         <TableContainer component={Paper}>
