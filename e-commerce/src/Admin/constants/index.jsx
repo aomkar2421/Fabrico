@@ -1,4 +1,4 @@
-import { ChartColumn, Home, NotepadText, Package, PackagePlus, Settings, ShoppingBag, UserCheck, UserPlus, Users } from "lucide-react";
+import { ChartColumn, Home, NotepadText, ShoppingCart, Group, Package, PackagePlus, Settings, ShoppingBag, UserCheck, UserPlus, Users } from "lucide-react";
 
 import ProfileImage from "../assets/profile-image.jpg";
 import ProductImage from "../assets/product-image.jpg";
@@ -10,58 +10,78 @@ export const navbarLinks = [
             {
                 label: "Dashboard",
                 icon: Home,
-                path: "/",
-            },
-            {
-                label: "Analytics",
-                icon: ChartColumn,
-                path: "/analytics",
-            },
-            {
-                label: "Reports",
-                icon: NotepadText,
-                path: "/reports",
-            },
-        ],
-    },
-    {
-        title: "Customers",
-        links: [
-            {
-                label: "Customers",
-                icon: Users,
-                path: "/customers",
-            },
-            {
-                label: "New customer",
-                icon: UserPlus,
-                path: "/new-customer",
-            },
-            {
-                label: "Verified customers",
-                icon: UserCheck,
-                path: "/verified-customers",
-            },
+                path: "/admin",
+            }
         ],
     },
     {
         title: "Products",
         links: [
             {
-                label: "Products",
-                icon: Package,
-                path: "/products",
+                label: "All Producrs",
+                icon: Group,
+                path: "/admin/products",
             },
+            {
+                label: "New Products",
+                icon: Package,
+                path: "/admin/newProducts",
+            },
+            {
+                label: "Add Products",
+                icon: PackagePlus,
+                path: "/admin/product/create",
+            },
+        ],
+    },
+    {
+        title: "Orders",
+        links: [
+            {
+                label: "All Orders",
+                icon: ShoppingBag,
+                path: "/admin/orders",
+            },
+            {
+                label: "Recent Orders",
+                icon: ShoppingCart,
+                path: "/admin/newOrders",
+            }
+        ],
+    },
+    {
+        title: "Customers",
+        links: [
+            {
+                label: "All Customers",
+                icon: Users,
+                path: "/admin/customers",
+            },
+            {
+                label: "New Customers",
+                icon: UserPlus,
+                path: "/admin/newCustomers",
+            }
+        ],
+    },
+    {
+        title: "Analytics",
+        links: [
+            {
+                label: "Analytics",
+                icon: ChartColumn,
+                path: "/analytics",
+            }
+        ],
+    },
+    {
+        title: "Products Management",
+        links: [
             {
                 label: "New product",
                 icon: PackagePlus,
-                path: "/new-product",
-            },
-            {
-                label: "Inventory",
-                icon: ShoppingBag,
-                path: "/inventory",
-            },
+                path: "/admin/new-products",
+            }
         ],
     },
     {

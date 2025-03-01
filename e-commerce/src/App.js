@@ -1,7 +1,7 @@
-import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import CustomerRouters from "./Routers/CustomerRouters";
 import AdminRouters from "./Routers/AdminRouters";
+import './index.css'
 
 function App() {
   return (

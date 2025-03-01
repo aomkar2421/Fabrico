@@ -58,24 +58,24 @@ const OrdersTableView = () => {
   return (
     <div className="overflow-hidden">
       <Card className="mt-2">
-        <CardHeader title="Recent Orders" />
+        {/* <CardHeader title="Recent Orders" /> */}
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Image</TableCell>
-                <TableCell align="left">Title</TableCell>
-                <TableCell align="left">Price</TableCell>
-                <TableCell align="left">Status</TableCell>
+            <TableHead className="bg-slate-200 transition-colors dark:bg-slate-800">
+              <TableRow className="text-slate-900 transition-colors dark:text-slate-50">
+                <TableCell className="text-slate-900 transition-colors dark:text-slate-50">Image</TableCell>
+                <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="left">Title</TableCell>
+                <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="left">Price</TableCell>
+                <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="left">Status</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody className="bg-white transition-colors dark:bg-slate-700">
               {adminOrder?.orders?.slice(0,5).map((item, index) => (
                 <TableRow
                   key={item.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell align="left">
+                  <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="left">
                     <AvatarGroup max={3} sx={{ justifyContent: "start" }}>
                       {item.orderltems.map((orderItem) => (
                         <Avatar src={orderItem.product.imageUrl}></Avatar>
@@ -83,14 +83,14 @@ const OrdersTableView = () => {
                     </AvatarGroup>
                   </TableCell>
 
-                  <TableCell align="left">
+                  <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="left">
                     {item.orderltems.map((orderItem) => (
                       <p> {orderItem.product.title}</p>
                     ))}
                   </TableCell>
 
-                  <TableCell align="left">{item.totalPrice}</TableCell>
-                  <TableCell align="left">
+                  <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="left">{item.totalPrice}</TableCell>
+                  <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="left">
                     {" "}
                     <span
                       className={`text-white px-5 py-2 rounded-full

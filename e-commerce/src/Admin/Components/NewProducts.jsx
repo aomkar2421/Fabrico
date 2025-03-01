@@ -15,7 +15,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, findProducts } from "../../State/Product/Action";
 
-const ProductsTable = () => {
+const NewProducts = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((store) => store);
 
@@ -44,7 +44,7 @@ const ProductsTable = () => {
   return (
     <div className="p-5">
       <Card className="mt-2">
-        <CardHeader className="" title="All Products" />
+        <CardHeader className="" title="New Products" />
         <TableContainer component={Paper} className="bg-slate-950">
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -57,11 +57,12 @@ const ProductsTable = () => {
                 <TableCell align="left">Delete</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {products?.products?.content?.map((item) => (
+            <TableBody  >
+              {products?.products?.content?.slice(0,5).map((item) => (
                 <TableRow 
                   key={item.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                   
                 >
                   <TableCell align="right">
                     <Avatar src={item.imageUrl} />
@@ -85,7 +86,7 @@ const ProductsTable = () => {
   );
 };
 
-export default ProductsTable;
+export default NewProducts;
 
 // {products.products.content.map((item) => (
 //   <TableRow

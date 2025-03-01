@@ -40,35 +40,35 @@ import {
     return (
       <div className="">
         <Card className="mt-2">
-          <CardHeader title="Recent Products" />
-          <TableContainer component={Paper}>
+          {/* <CardHeader title="Recent Products" /> */}
+          <TableContainer className="" component={Paper}>
             <Table sx={{ minWidth: 550 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Image</TableCell>
-                  <TableCell align="left">Title</TableCell>
-                  <TableCell align="left">Category</TableCell>
-                  <TableCell align="left">Price</TableCell>
-                  <TableCell align="left">Quantity</TableCell>
+              <TableHead className="bg-slate-200 transition-colors dark:bg-slate-800">
+                <TableRow className="text-slate-900 transition-colors dark:text-slate-50">
+                  <TableCell className="text-slate-900 transition-colors dark:text-slate-50">Image</TableCell>
+                  <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="left">Title</TableCell>
+                  <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="left">Category</TableCell>
+                  <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="left">Price</TableCell>
+                  <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="left">Quantity</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody className="bg-white transition-colors dark:bg-slate-700">
                 {products?.products?.content?.slice(0,5).map((item) => (
                   <TableRow
                     key={item.name}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell align="right">
+                    <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="right">
                       <Avatar src={item.imageUrl}></Avatar>
                     </TableCell>
-                    <TableCell component="th" scope="row">
+                    <TableCell className="text-slate-900 transition-colors dark:text-slate-50" component="th" scope="row">
                       {" "}
                       {item.title}{" "}
                     </TableCell>
   
-                    <TableCell align="left">{item.category.name}</TableCell>
-                    <TableCell align="left">{item.price}</TableCell>
-                    <TableCell align="left">{item.quantity}</TableCell>
+                    <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="left">{item.category.name}</TableCell>
+                    <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="left">{item.price}</TableCell>
+                    <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="left">{item.quantity}</TableCell>
 
                   </TableRow>
                 ))}

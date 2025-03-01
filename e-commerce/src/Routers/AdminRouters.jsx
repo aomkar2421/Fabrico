@@ -4,7 +4,7 @@ import Admin from '../Admin/Admin'
 
 const AdminRouters = () => {
   return (
-    <div>
+    <div className='admin-container'>
         <Routes>
             <Route path='/*' element={<Admin/>} ></Route>
         </Routes>

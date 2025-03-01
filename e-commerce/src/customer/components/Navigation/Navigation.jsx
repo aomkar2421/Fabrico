@@ -262,9 +262,9 @@ export default function Navigation() {
                 
                   <span className="sr-only">Your Company</span>
                   <img  onClick={()=> navigate('/') }
-                    src="https://res.cloudinary.com/ddkso1wxi/image/upload/v1675919455/Logo/Copy_of_Zosh_Academy_nblljp.png"
-                    alt="Shopwithzosh"
-                    className="h-8 w-8 mr-2"
+                    src="https://res.cloudinary.com/dlaf451ax/image/upload/fl_preserve_transparency/v1740827088/xgpzclla5pjlpeqhnpvz.jpg?_s=public-apps"
+                    alt="fabrico"
+                    className="h-7 mr-2"
                   />
                 
               </div>

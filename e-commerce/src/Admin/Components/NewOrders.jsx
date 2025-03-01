@@ -24,7 +24,7 @@ import {
   TableRow,
 } from "@mui/material";
 
-const OrdersTable = () => {
+const NewOrders = () => {
   const dispatch = useDispatch();
 
   const { adminOrder } = useSelector((store) => store);
@@ -77,11 +77,11 @@ const OrdersTable = () => {
   return (
     <div className="p-10">
       <Card className="mt-2 ">
-        <CardHeader className="" title="All Orders" />
-        <TableContainer className="" component={Paper}>
+        <CardHeader title="Recent Orders" />
+        <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
-              <TableRow className="">
+              <TableRow>
                 <TableCell>Image</TableCell>
                 <TableCell align="left">Title</TableCell>
                 <TableCell align="left">Id</TableCell>
@@ -91,7 +91,7 @@ const OrdersTable = () => {
                 <TableCell align="left">Delete</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody className="">
+            <TableBody>
               {adminOrder?.orders?.map((item, index) => (
                 <TableRow
                   key={item.name}
@@ -184,4 +184,4 @@ const OrdersTable = () => {
   );
 };
 
-export default OrdersTable;
+export default NewOrders;

@@ -2,6 +2,8 @@ import React, { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createProduct } from "../../State/Product/Action";
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const initialSizes = [
   { name: "S", quantity: 0 },
@@ -53,6 +55,25 @@ const CreateProductForm = () => {
     e.preventDefault();
     dispatch(createProduct(productData));
     console.log("DATA THAT I ENTERED ---- ", productData);
+
+    toast.success("Product added successfully!");
+
+    setProductData({
+      imageUrl: "",
+      brand: "",
+      title: "",
+      color: "",
+      discountedPrice: "",
+      price: "",
+      discountPersent: "",
+      size: initialSizes, // Reset sizes
+      quantity: "",
+      topLavelCategory: "",
+      secondLavelCategory: "",
+      thirdLavelCategory: "",
+      description: "",
+    });
+
   };
 
   return (
