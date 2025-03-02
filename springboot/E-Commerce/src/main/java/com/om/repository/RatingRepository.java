@@ -13,5 +13,7 @@ public interface RatingRepository extends JpaRepository<Rating, Long>{
 	@Query("SELECT r From Rating r Where r.product.id=:productId")
 	public List<Rating> getAllProductsRating(@Param("productId")Long productId);
 	
+	@Query("SELECT r From Rating r Where r.product.id=:productId AND r.user.id=:userId")
+	public Rating findByProductIdAndUserId(@Param("productId")Long productId, @Param("userId")Long userId);
 
 }

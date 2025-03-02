@@ -26,13 +26,28 @@ public class JwtProvider {
 	}
 
 
+//	public String getEmailFromToken(String jwt) {
+//
+//		jwt = jwt.substring(7);
+//
+//		Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
+//		String email = String.valueOf(claims.get("email"));
+//
+//		return email;
+//	}
+	
+	
 	public String getEmailFromToken(String jwt) {
-
-		jwt = jwt.substring(7);
-
-		Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
-		String email = String.valueOf(claims.get("email"));
-
-		return email;
+	    // Check if the token has Bearer prefix and remove it
+	    if(jwt.startsWith("Bearer ")) {
+	        jwt = jwt.substring(7);
+	    }
+	    
+	    Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
+	    String email = String.valueOf(claims.get("email"));
+	    
+	    System.out.println("Extracted email from token: " + email);
+	    
+	    return email;
 	}
 }

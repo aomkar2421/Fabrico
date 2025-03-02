@@ -1,14 +1,25 @@
 import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { Radio, RadioGroup } from "@headlessui/react";
-import { Box, Button, Grid, LinearProgress, Rating } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  LinearProgress,
+  Rating,
+  TextField,
+} from "@mui/material";
 import ProductReviewCard from "./ProductReviewCard";
-import {mens_kurta} from "../../../Data/mens_kurta.js"
+import { mens_kurta } from "../../../Data/mens_kurta.js";
 import HomeSectionCard from "../HomeSectionCard/HomeSectionCard.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { findProductsById } from "../../../State/Product/Action.js";
 import { addItemToCart } from "../../../State/Cart/Action.js";
+import { createReview, getReviewById } from "../../../State/Review/Action.js";
+import { createRating, getRatingById } from "../../../State/Rating/Action.js";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -58,7 +69,7 @@ const product = {
   details:
     'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
 };
-const reviews = { href: "#", average: 4, totalCount: 117 };
+// const reviews = { href: "#", average: 4, totalCount: 117 };
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -69,27 +80,109 @@ export default function ProductDetails() {
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
-  const {products} = useSelector(store => store);
+  const { products } = useSelector((store) => store);
+  const [reviewData, setReviewData] = useState("");
+  const [ratingData, setRatingData] = useState(0);
+  const productId = params.productId;
+  
+  // const { adminOrder } = useSelector((store) => store);
+  const { reviews } = useSelector((store) => store);
+  const { ratings } = useSelector((store) => store);
 
-  useEffect( () => {
-    const data = {productId: params.productId};
+  // console.log(
+  //   "============== REVIEWS DATA USING SELECTOR ====================",
+  //   reviews
+  // );
+  // console.log(
+  //   "============== RATINGS DATA USING SELECTOR ====================",
+  //   ratings
+  // );
+
+  // const finalRatings = ratings?.rating;
+  // console.log("====FINAL RATINGS=========", finalRatings);
+  // const ratingValues = finalRatings.map((item) => item.rating);
+  // const totalRating = ratingValues.reduce((sum, rating) => sum + rating, 0);
+  // const averageRating = totalRating / finalRatings.length;
+  // // const roundedAverageRating = averageRating.toFixed(1);
+  // console.log("=============AVG RATING IS ============", averageRating);
+  // console.log("=============total RATING IS ============", totalRating);
+  // console.log("=============total RATING COUNT IS ============", finalRatings.length);
+
+  const calculateAverageRating = (ratings) => {
+    if (!ratings || ratings.length === 0) {
+      return 0;
+    }
+    const sum = ratings.reduce((total, item) => total + item.rating, 0);
+    // console.log("=============TOTAL RATING IS ============", sum);
+    return Number((sum / ratings.length).toFixed(1));
+  };
+
+  const averageRating = calculateAverageRating(ratings.ratings);
+
+  const totalRatingCount = ratings?.ratings?.length;
+  const totalReviewCount = reviews?.reviews?.length;
+
+  useEffect(() => {
+    const data = { productId: params.productId };
     dispatch(findProductsById(data));
-  }, [params.productId] )
+  }, [params.productId, dispatch]);
 
-  const handleAddToCart = () =>{
-    const data = { productId:params.productId, size:selectedSize.name };
-    console.log("data_ ", data);
+  useEffect(() => {
+    console.log("Product ID:", params.productId);
+    dispatch(getReviewById(params.productId));
+    dispatch(getRatingById(params.productId));
+  }, [params.productId, dispatch]);
+
+  const handleAddToCart = () => {
+    const data = { productId: params.productId, size: selectedSize.name };
+    // console.log("data_ ", data);
     dispatch(addItemToCart(data));
-    
-    navigate('/cart');
-  }
+
+    navigate("/cart");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // console.log("=============REVIEW===============", reviewData);
+
+    const productId = params.productId;
+
+    await dispatch(
+      createReview({
+        productId: productId,
+        review: reviewData,
+      })
+    );
+    toast.success("Review Added Succesfully");
+
+    // console.log("REVIEW ADDED SUCCESSFULLY");
+    setReviewData("");
+    dispatch(getReviewById(params.productId));
+  };
+
+  const handleRatingSubmit = (e) => {
+    e.preventDefault();
+    // console.log("=============Rating===============", ratingData);
+
+    const productId = params.productId;
+    dispatch(
+      createRating({
+        productId: productId,
+        rating: ratingData,
+      })
+    );
+
+    // console.log("RATING ADDED SUCCESSFULLY");
+    setRatingData(0);
+    // toast.success("Rating Added Succesfully");
+  };
+
 
   return (
     <div className="bg-white lg:px-20">
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
           <ol
-            role="list"
             className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
           >
             {product.breadcrumbs.map((breadcrumb) => (
@@ -154,10 +247,10 @@ export default function ProductDetails() {
           <div className="lg:col-span-1 maxt-auto max-w-2xl px-4 pb-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pb-24">
             <div className="lg:col-span-2">
               <h1 className="text-lg lg:text-xl font-semibold text-gray-900">
-              {products.product?.brand}
+                {products.product?.brand}
               </h1>
               <h1 className="text-lg lg:text-xl opacity-60 pt-2 text-gray-900">
-              {products.product?.title}
+                {products.product?.title}
               </h1>
             </div>
 
@@ -166,18 +259,24 @@ export default function ProductDetails() {
               <h2 className="sr-only">Product information</h2>
 
               <div className="flex items-center space-x-5 text-lg lg:text-xl text-gray-900 mt-6 ">
-                <p className="font-semibold">₹{products.product?.discountedPrice}</p>
-                <p className="line-through opacity-50">₹{products.product?.price}</p>
-                <p className="font-semibold text-gray-500">{products.product?.discountPersent}% off</p>
+                <p className="font-semibold">
+                  ₹{products.product?.discountedPrice}
+                </p>
+                <p className="line-through opacity-50">
+                  ₹{products.product?.price}
+                </p>
+                <p className="font-semibold text-gray-500">
+                  {products.product?.discountPersent}% off
+                </p>
               </div>
 
               {/* Reviews */}
               <div className="mt-6">
                 <div className="flex items-center space-x-3">
-                  <Rating name="read-only" value={5.5} readOnly />
-                  <p className="opacity-50 text-sm">56540 Ratings</p>
+                  <Rating name="read-only" value={averageRating} readOnly />
+                  <p className="opacity-50 text-sm">{totalRatingCount} Ratings</p>
                   <p className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                    3870 Reviews
+                    {totalReviewCount} Reviews
                   </p>
                 </div>
               </div>
@@ -241,7 +340,7 @@ export default function ProductDetails() {
                 </div>
 
                 <Button
-                onClick={handleAddToCart}
+                  onClick={handleAddToCart}
                   variant="contained"
                   sx={{ px: "2rem", py: "1rem", bgcolor: "blue", mt: "2rem" }}
                 >
@@ -268,7 +367,7 @@ export default function ProductDetails() {
                 </h3>
 
                 <div className="mt-4">
-                  <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
+                  <ul className="list-disc space-y-2 pl-4 text-sm">
                     {product.highlights.map((highlight) => (
                       <li key={highlight} className="text-gray-400">
                         <span className="text-gray-600">{highlight}</span>
@@ -290,18 +389,73 @@ export default function ProductDetails() {
         </div>
 
         <section>
-          <h1 className="font-semibold text-1g pb-4">Recent Review & Rating</h1>
+          <h1 className="font-semibold text-2xl pb-4">
+            Recent Review & Rating
+          </h1>
           <div className="border p-5">
             <Grid container spacing={7}>
               <Grid item xs={7}>
                 <div className="space-y-5">
-                  {[1, 1, 1, 1].map((item) => (
-                    <ProductReviewCard />
+                  {reviews?.reviews?.map((item) => (
+                    <ProductReviewCard review={item} productId={productId} />
                   ))}
                 </div>
               </Grid>
 
               <Grid item xs={5}>
+                <div className="mt-5 w-full">
+                  <h1 className="font-bold text-2xl ">
+                    Post Your Review & Rating
+                  </h1>
+                  <form action="" onSubmit={handleSubmit}>
+                    <div className="h-auto bg-slate-100 rounded-md p-10 my-5 ">
+                      <div>
+                        <TextField
+                          fullWidth
+                          id="outline-multiline-static"
+                          label="Review"
+                          multiline
+                          name="review"
+                          rows={3}
+                          value={reviewData}
+                          onChange={(e) => setReviewData(e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <button
+                          type="submit"
+                          className="mt-5 bg-blue-700 w-32 h-14 rounded-md text-white font-semibold"
+                        >
+                          Submit Review
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div className="mt-5 w-full">
+                  <h1 className="font-bold text-2xl ">Post Your Rating</h1>
+                  <form action="" onSubmit={handleRatingSubmit}>
+                    <div className="h-auto bg-slate-100 rounded-md p-10 my-5 ">
+                      <div>
+                        <Rating
+                          value={ratingData}
+                          onChange={(e) => setRatingData(e.target.value)}
+                          precision={0.5}
+                        />
+                      </div>
+                      <div>
+                        <button
+                          type="submit"
+                          className="mt-5 bg-blue-700 w-32 h-14 rounded-md text-white font-semibold"
+                        >
+                          Submit Rating
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
                 <h1 className="text-xl font-semibold pb-1">Product Ratings</h1>
 
                 <div className="flex items-center space-x-3">
@@ -310,7 +464,7 @@ export default function ProductDetails() {
                 </div>
 
                 <Box className="mt-5">
-                <Grid
+                  <Grid
                     container
                     justifyContent="center"
                     alignItems="center"
@@ -419,7 +573,6 @@ export default function ProductDetails() {
                       <p className="text-sm text-gray-500">10%</p>
                     </Grid>
                   </Grid>
-
                 </Box>
               </Grid>
             </Grid>
@@ -430,10 +583,11 @@ export default function ProductDetails() {
         <section>
           <h1 className="my-10 font-semibold text-2xl">Similar Products</h1>
           <div className="flex flex-wrap space-y-5">
-            {mens_kurta.slice(0,8).map((item)=> <HomeSectionCard product={item}/> )}
+            {mens_kurta.slice(0, 8).map((item) => (
+              <HomeSectionCard product={item} />
+            ))}
           </div>
         </section>
-
       </div>
     </div>
   );

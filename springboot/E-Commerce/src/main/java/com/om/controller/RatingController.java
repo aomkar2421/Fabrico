@@ -40,13 +40,23 @@ public class RatingController {
 		return new ResponseEntity<Rating>(rating, HttpStatus.CREATED);
 	}
 
-
 	@GetMapping("/product/{productId}")
 	public ResponseEntity<List<Rating>> getProductsRating (@PathVariable Long productId, @RequestHeader("Authorization") String jwt) throws UserException, ProductException {
 		User user = userService.findUserProfileByJwt(jwt);
 		List<Rating> ratings = ratingService.getProductsRating(productId);
 		return new ResponseEntity<>(ratings, HttpStatus.CREATED);
 	}
-
-
+	
+	
+	@GetMapping("/product/{productId}/user/{userId}")
+	public ResponseEntity<Rating> getProductRatingByUser(@PathVariable Long productId, @PathVariable Long userId){
+		Rating rating = ratingService.getRatingByProductAndUser(productId, userId);
+		
+		if (rating == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(rating, HttpStatus.OK);
+	}
+	
 }

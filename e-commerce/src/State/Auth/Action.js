@@ -39,9 +39,10 @@ export const login =(userData)=>async(dispatch)=>{
         if(user.jwt){
             localStorage.setItem("jwt", user.jwt);
         }
-        console.log("user "+user)
+        console.log("USER LOGGED IN SUCCESFULLY "+user.jwt)
         dispatch(loginSuccess(user.jwt));
     } catch (error) {
+        console.log("ERROR WHILE USER TRIED LOGGED IN "+error)
         dispatch(loginFailure(error.message));
     }
 }  
@@ -53,6 +54,7 @@ const getUserSuccess = (user) => ({type:GET_USER_SUCCESS, payload:user});
 const getUserFailure = (error) => ({type:GET_USER_FAILURE, payload:error});
 
 export const getUser =(jwt)=>async(dispatch)=>{
+    // console.log("=======TRYING TO GET USER DATA ACTION.JS==========");
     dispatch(getUserRequest());
 
     try {
@@ -62,10 +64,11 @@ export const getUser =(jwt)=>async(dispatch)=>{
             }
         });
         const user = response.data;
-        // console.log("user ",user);
+        // console.log("=======GETTING USER DATA ACTION.JS======== ",user);
 
         dispatch(getUserSuccess(user));
     } catch (error) {
+        // console.log("=======ERROR GETTING USER DATA ACTION.JS======== ",error);
         dispatch(getUserFailure(error.message));
     }
 }

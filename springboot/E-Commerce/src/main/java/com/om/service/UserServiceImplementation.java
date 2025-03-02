@@ -33,16 +33,36 @@ public class UserServiceImplementation implements UserService {
 		throw new UserException("User not found for user id - "+userId);
 	}
 
+//	@Override
+//	public User findUserProfileByJwt(String jwt) throws UserException {
+//		String email = jwtProvider.getEmailFromToken(jwt);
+//		System.out.println("=================EMAIL FROM JWT====================="+ email);
+//		User user = userRepository.findByEmail(email);
+//		System.out.println("=================USER FROM JWT====================="+ user);
+//
+//		if (user == null) {
+//			throw new UserException("User not found with email - "+email);
+//		}
+//				
+//		return user;
+//	}
+	
+	
 	@Override
 	public User findUserProfileByJwt(String jwt) throws UserException {
-		String email = jwtProvider.getEmailFromToken(jwt);
-		User user = userRepository.findByEmail(email);
-		
-		if (user == null) {
-			throw new UserException("User not found with email - "+email);
-		}
-				
-		return user;
+	    System.out.println("Raw JWT received: " + jwt);
+	    
+	    String email = jwtProvider.getEmailFromToken(jwt);
+	    System.out.println("Email extracted from JWT: " + email);
+	    
+	    User user = userRepository.findByEmail(email);
+	    System.out.println("User found for email " + email + ": " + (user != null));
+	    
+	    if (user == null) {
+	        throw new UserException("User not found with email - " + email);
+	    }
+	    
+	    return user;
 	}
 
 }

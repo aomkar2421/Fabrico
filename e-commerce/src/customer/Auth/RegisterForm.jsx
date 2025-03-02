@@ -14,6 +14,7 @@ const RegisterForm = () => {
 
     useEffect(()=>{
         if(jwt){
+            console.log("GETTING USER DATA REGISTER FORM");
             dispatch(getUser(jwt))
         }
     },[jwt, auth.jwt])

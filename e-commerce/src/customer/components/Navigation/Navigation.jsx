@@ -55,6 +55,7 @@ export default function Navigation() {
 
   useEffect(()=>{
     if(jwt){
+        // console.log("==============TRYING TO GET USER ON NAVIGATION==============");
         dispatch(getUser(jwt))
     }
   },[jwt, auth.jwt])

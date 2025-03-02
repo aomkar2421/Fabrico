@@ -17,6 +17,4 @@ public class RatingRequest {
 		this.rating = rating;
 	}
 	
-	
-
 }
