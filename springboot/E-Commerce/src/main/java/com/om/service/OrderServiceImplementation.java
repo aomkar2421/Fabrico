@@ -106,8 +106,8 @@ public class OrderServiceImplementation implements OrderService{
 	}
 
 	@Override
-	public List<Order> usersOrderHistory(Long userld) {
-		List<Order> orders = orderRepository.getUsersOrders(userld);
+	public List<Order> usersOrderHistory(Long userId) {
+		List<Order> orders = orderRepository.getUsersOrders(userId);
 		return orders;
 	}
 

@@ -105,6 +105,7 @@ const OrdersTable = () => {
                     </AvatarGroup>
                   </TableCell>
 
+
                   <TableCell align="left">
                     {item.orderltems.map((orderItem) => (
                       <p> {orderItem.product.title}</p>

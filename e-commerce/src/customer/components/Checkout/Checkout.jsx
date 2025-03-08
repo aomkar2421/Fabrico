@@ -8,14 +8,14 @@ import Typography from '@mui/material/Typography';
 import { useLocation } from 'react-router-dom';
 import DeliveryAddressForm from './DeliveryAddressForm';
 import OrderSummary from './OrderSummary';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAddressByUser } from '../../../State/Address/Action';
 
 const steps = ['Login', 'Delivery Address', 'Order Summary', 'Payment'];
 
 export default function HorizontalLinearStepper() {
     const [activeStep, setActiveStep] = React.useState(0);
-
     const location = useLocation();
-
     const querySearch = new URLSearchParams(location.search);
     const step = querySearch.get("step");
 
