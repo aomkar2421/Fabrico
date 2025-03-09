@@ -23,7 +23,7 @@ const OrderCard = ({ item }) => {
           </div>
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <div className="">
             {item.orderltems.map((orderItem) => (
               <p> {orderItem.product.title}</p>
@@ -32,11 +32,39 @@ const OrderCard = ({ item }) => {
         </Grid>
 
         <Grid item xs={2}>
-          <p className="font-semibold text-gray-800">
-            {item.totalDiscountedPrice}
+          {/* <p className="font-semibold">
+            <span className="text-gray-800">{item.orderStatus}</span>
+          </p> */}
+          <span
+            className={`text-white px-5 py-2 rounded-full
+                  ${
+                    item.orderStatus === "CONFIRMED"
+                      ? "bg-green-500"
+                      : item.orderStatus === "SHIPED"
+                      ? "bg-blue-800"
+                      : item.orderStatus === "DELIVERED"
+                      ? "bg-green-900"
+                      : item.orderStatus === "PLACED"
+                      ? "bg-blue-500"
+                      : item.orderStatus === "PENDING"
+                      ? "bg-gray-500"
+                      : "bg-red-800"
+                  }`}
+          >
+            {item.orderStatus}
+          </span>
+        </Grid>
+
+        <Grid item xs={2}>
+          <p className="font-semibold">
+            {" "}
+            Discounted Price :
+            <span className="text-gray-800">{item.totalDiscountedPrice}</span>
           </p>
-          <p className="font-semibold line-through text-red-500">
-            {item.totalPrice}
+          <p className="font-semibold">
+            {" "}
+            Total Price :
+            <span className="line-through text-red-500">{item.totalPrice}</span>
           </p>
         </Grid>
 

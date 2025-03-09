@@ -40,11 +40,20 @@ const DeliveryAddressForm = () => {
     dispatch(createOrder(orderData));
   };
 
-
   const handleExistingAddress = (selectedAddress) => {
     console.log("Selected existing address:", selectedAddress);
-    
-    const orderData = { address: selectedAddress, navigate };
+
+    const address = {
+      firstName: selectedAddress.firstName,
+      lastName: selectedAddress.lastName,
+      streetAddress: selectedAddress.streetAddress,
+      city: selectedAddress.city,
+      state: selectedAddress.state,
+      zipCode: selectedAddress.zipCode,
+      mobile: selectedAddress.mobile,
+    };
+    console.log("=== FIANL SELECTED ADDRESS =====", address);
+    const orderData = { address: address, navigate };
     dispatch(createOrder(orderData));
   };
 
@@ -57,19 +66,19 @@ const DeliveryAddressForm = () => {
           md={5}
           className="border rounded-e-md shadow-md h-[30.5rem] overflow-y-scroll"
         >
-        {address?.addresses.map((item, index) => (
-          <div key={index} className="p-5 py-7 border-b cursor-pointer">
-            <AddressCard address={item} />
-            <Button
-              sx={{ mt: 2, bgcolor: "RGB(145 85 253)", color: "white" }}
-              size="large"
-              variant="contained"
-              onClick={() => handleExistingAddress(item)}
-            >
-              Deliver Here
-            </Button>
-          </div>
-        ))}
+          {address?.addresses.map((item, index) => (
+            <div key={index} className="p-5 py-7 border-b cursor-pointer">
+              <AddressCard address={item} />
+              <Button
+                sx={{ mt: 2, bgcolor: "RGB(145 85 253)", color: "white" }}
+                size="large"
+                variant="contained"
+                onClick={() => handleExistingAddress(item)}
+              >
+                Deliver Here
+              </Button>
+            </div>
+          ))}
         </Grid>
 
         <Grid item xs={12} lg={7}>
