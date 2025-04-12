@@ -33,7 +33,8 @@ public class AppConfig {
 
 				CorsConfiguration cfg = new CorsConfiguration();
 				cfg.setAllowedOrigins(Arrays.asList(
-						"http://localhost:3000"
+						"http://localhost:3000",
+						"http://fabrico-frontend.s3-website-us-east-1.amazonaws.com"
 						));
 				cfg.setAllowedMethods(Collections.singletonList("*"));
 				cfg.setAllowCredentials(true);
