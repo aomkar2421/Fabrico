@@ -14,10 +14,12 @@ import {
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, findProducts } from "../../State/Product/Action";
+import GlobalLoader from "../GlobalLoader";
 
 const NewProducts = () => {
   const dispatch = useDispatch();
-  const { products } = useSelector((store) => store);
+  const products = useSelector((store) => store.products);
+  const loading = useSelector((store) => store.products.loading);
 
   console.log("Products ------- ", products);
 
@@ -58,6 +60,7 @@ const NewProducts = () => {
               </TableRow>
             </TableHead>
             <TableBody  >
+              <GlobalLoader loading={loading}/>
               {products?.products?.content?.slice(0,5).map((item) => (
                 <TableRow 
                   key={item.name}

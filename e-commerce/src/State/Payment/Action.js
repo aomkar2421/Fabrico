@@ -4,10 +4,19 @@ import { CREATE_PAYMENT_FAILURE, CREATE_PAYMENT_REQUEST, UPDATE_PAYMENT_REQUEST 
 export const createPayment = (orderId) =>async(dispatch) => {    
     console.log("CREATE PAYMENT");
     console.log("OrderId ",orderId);
-     
+    const token = localStorage.getItem("jwt"); // or however you store it
+
     dispatch({type:CREATE_PAYMENT_REQUEST});
     try {
-        const {data} = await api.post(`/api/payments/${orderId}`, {});
+        const { data } = await api.post(
+            `/api/payments/${orderId}`,
+            {},
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
+          );
 
         console.log("OrderId ",orderId);
         console.log("payment_link_url ",data.payment_link_url);

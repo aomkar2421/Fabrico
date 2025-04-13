@@ -23,11 +23,13 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import GlobalLoader from "../GlobalLoader";
 
 const OrdersTable = () => {
   const dispatch = useDispatch();
 
-  const { adminOrder } = useSelector((store) => store);
+  const adminOrder = useSelector((store) => store.adminOrder);
+  const loading = useSelector((store) => store.adminOrder.loading);
 
   // console.log("ADMIN ORDERS -----", adminOrder);
 
@@ -92,6 +94,7 @@ const OrdersTable = () => {
               </TableRow>
             </TableHead>
             <TableBody className="">
+              <GlobalLoader loading={loading}/>
               {adminOrder?.orders?.map((item, index) => (
                 <TableRow
                   key={item.name}

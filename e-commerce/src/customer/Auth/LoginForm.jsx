@@ -15,7 +15,6 @@ const LoginForm = () => {
         const userData = {
             email: data.get("email"),
             password: data.get("password")
-
         }
         dispatch(login(userData));
         console.log("============ User Data On Frontend =========== :- ", userData)

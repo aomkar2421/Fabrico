@@ -33,6 +33,9 @@ public class PaymentController {
 
 	@Value("${razorpay.api.secret}")
 	String apiSecret;
+	
+	@Value("${client}")
+	String client;
 
 	@Autowired
 	private OrderService orderService;
@@ -54,8 +57,9 @@ public class PaymentController {
 		try {
 			RazorpayClient razorpay = new RazorpayClient(apiKey, apiSecret);
 			JSONObject paymentLinkRequest = new JSONObject();
+			System.out.println("Payment Link Request: " + paymentLinkRequest.toString());
 
-			paymentLinkRequest.put("amount",order.getTotalDiscountedPrice()*100 );
+			paymentLinkRequest.put("amount", (int)(order.getTotalDiscountedPrice() * 100));
 			paymentLinkRequest.put("currency","INR");
 
 			JSONObject customer = new JSONObject();
@@ -68,7 +72,7 @@ public class PaymentController {
 			notify.put("email", true);
 			paymentLinkRequest.put("notify", notify);
 
-			paymentLinkRequest.put("callback_url", "http://localhost:3000/payment/"+orderId);
+			paymentLinkRequest.put("callback_url", client+"/payment/"+orderId);
 			paymentLinkRequest.put("callback_method", "get");
 
 			PaymentLink payment = razorpay.paymentLink.create(paymentLinkRequest);
@@ -82,12 +86,13 @@ public class PaymentController {
 
 			return new ResponseEntity<PaymentLinkResponse>(res, HttpStatus.CREATED);
 
-		}catch (RazorpayException e) {
-			System.err.println("RazorpayException: " + e.getMessage());
-			e.printStackTrace();
-			throw new RazorpayException("Error creating payment link: " + e.getMessage());
+		} catch (RazorpayException e) {
+		    System.err.println("RazorpayException: " + e.getMessage());
+		    if (e.getCause() != null) {
+		        e.getCause().printStackTrace();
+		    }
+		    throw new RazorpayException("Error creating payment link: " + e.getMessage());
 		}
-
 
 	}
 

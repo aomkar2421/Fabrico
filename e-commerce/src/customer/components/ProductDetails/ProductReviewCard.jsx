@@ -73,7 +73,7 @@ import { getRatingByUser } from '../../../State/Rating/Action';
 
 const ProductReviewCard = ({ review, productId }) => {
   const dispatch = useDispatch();
-  const { ratings } = useSelector((store) => store);
+  const ratings = useSelector((store) => store.ratings);
   
   const userId = review.user.id;
   const userRating = ratings.userRatings[userId]?.rating || 0;

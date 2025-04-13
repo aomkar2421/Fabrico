@@ -1,28 +1,36 @@
-import React, { useEffect } from 'react'
-import CartItem from './CartItem'
-import { Button } from '@mui/material'
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCart } from '../../../State/Cart/Action';
+import React, { useEffect, useState } from "react";
+import CartItem from "./CartItem";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../../../State/Cart/Action";
+import GlobalLoader from "../../Loader/GlobalLoader";
+import ButtonLoader from "../../Loader/ButtonLoader";
 
 const Cart = () => {
   const navigate = useNavigate();
-  const {cart} = useSelector(store => store);
+  const cart = useSelector((state) => state.cart);
+  const loading = useSelector((state) => state.cart.loading);
   const dispatch = useDispatch();
+  const [buttonLoader, setButtonLoader] = useState(false);
 
-  useEffect( () => {
+  useEffect(() => {
     dispatch(getCart());
-  }, [cart.updateCartItem, cart.deleteCartItem] )
+  }, [cart.updateCartItem, cart.deleteCartItem]);
 
-  const handleCheckout = () =>{
-    navigate('/checkout?step=2')
-  }
+  const handleCheckout = () => {
+    setButtonLoader(true);
+    navigate("/checkout?step=2");
+  };
 
   return (
     <div>
       <div className="lg:grid grid-cols-3 lg:px-16 relative">
         <div className="col-span-2">
-          {cart.cart?.cartitems.map((item)=> <CartItem item={item} /> )}
+          <GlobalLoader loading={loading} />
+          {cart.cart?.cartitems.map((item) => (
+            <CartItem item={item} />
+          ))}
         </div>
         <div className="px-5 sticky top-0 h-[100vh] mt-5 lg:mt-0">
           <div className="border p-4">
@@ -41,25 +49,46 @@ const Cart = () => {
                 <span>Deliver Charges</span>
                 <span>Free</span>
               </div>
-              <hr/>
+              <hr />
               <div className="flex justify-between pt-3 text-black font-bold mb-10">
                 <span>Total Amount</span>
                 <span>₹{cart.cart?.totalDiscountedPrice}</span>
               </div>
-              <Button
-              onClick={handleCheckout}
-              className='w-full'
+              {buttonLoader ? (
+                <Button
+                onClick={handleCheckout}
+                className="w-full"
+                variant="contained"
+                sx={{
+                  px: "2rem",
+                  py: "1rem",
+                  bgcolor: "#4545e7",
+                  mt: "2rem",
+                }}
+              >
+                <ButtonLoader/>
+              </Button>
+              ) : (
+                <Button
+                  onClick={handleCheckout}
+                  className="w-full"
                   variant="contained"
-                  sx={{ px: "2rem", py: "1rem", bgcolor: "#4545e7", mt: "2rem" }}
+                  sx={{
+                    px: "2rem",
+                    py: "1rem",
+                    bgcolor: "#4545e7",
+                    mt: "2rem",
+                  }}
                 >
                   Checkout
                 </Button>
+              )}
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;

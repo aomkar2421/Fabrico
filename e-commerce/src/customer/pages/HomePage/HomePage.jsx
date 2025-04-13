@@ -52,9 +52,11 @@ import HomeSectionCarosel from "../../components/HomeSectionCarosel/HomeSectionC
 // import { mens_kurta } from "../../../Data/mens_kurta";
 import { useDispatch, useSelector } from "react-redux";
 import { findProducts } from "../../../State/Product/Action";
+import { Vortex } from "react-loader-spinner";
 
 const HomePage = () => {
-  const { products } = useSelector((store) => store);
+  const products = useSelector((store) => store.products);
+  const loading = useSelector((store) => store.products.loading);
   const dispatch = useDispatch();
 
     const [mensKurta, setMensKurta] = useState([]);
@@ -100,13 +102,26 @@ const HomePage = () => {
   return (
     <div>
       <MainCrosel />
-      <div className="py-20 space-y-10 flex flex-col justify-center px-5 lg:px-10">
-      <HomeSectionCarosel data={mensKurta || []} sectionName="Men's Kurta" />
-      <HomeSectionCarosel data={womensTop || []} sectionName="Women's Top" />
-      <HomeSectionCarosel data={womensJeans || []} sectionName="Women's Jeans" />
-      <HomeSectionCarosel data={mensJeans || []} sectionName="Men's Jeans" />
-      <HomeSectionCarosel data={womensDress || []} sectionName="Women's Dress" />
-      </div>
+      {loading ? (
+            <div className="flex justify-center items-center h-96">
+              <Vortex
+                visible={true}
+                height="200"
+                width="200"
+                ariaLabel="vortex-loading"
+                colors={['#4F46E5', '#6366F1', '#818CF8', '#A5B4FC', '#C7D2FE', '#E0E7FF']}
+              />
+            </div>
+          ) : (
+            <div className="py-20 space-y-10 flex flex-col justify-center px-5 lg:px-10">
+            <HomeSectionCarosel data={mensKurta || []} sectionName="Men's Kurta" />
+            <HomeSectionCarosel data={womensTop || []} sectionName="Women's Top" />
+            <HomeSectionCarosel data={womensJeans || []} sectionName="Women's Jeans" />
+            <HomeSectionCarosel data={mensJeans || []} sectionName="Men's Jeans" />
+            <HomeSectionCarosel data={womensDress || []} sectionName="Women's Dress" />
+            </div>
+        ) }
+
     </div>
   );
 };

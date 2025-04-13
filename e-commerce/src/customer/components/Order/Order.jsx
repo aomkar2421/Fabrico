@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import OrderCard from './OrderCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrderByUser } from '../../../State/Order/Action';
+import GlobalLoader from '../../Loader/GlobalLoader';
 
 const orderStatus = [
     { label: "On The Way", value: "on_the_way" },
@@ -13,9 +14,10 @@ const orderStatus = [
 
 
 const Order = () => {
+    const loading = useSelector((state) => state.order.loading)
 
     const dispatch = useDispatch();
-    const { order } = useSelector((store) => store);
+    const order = useSelector((state) => state.order);
 
   useEffect(() => {
     dispatch(getOrderByUser());
@@ -23,7 +25,7 @@ const Order = () => {
 
   console.log("ORDERS BY USER FRONTEND ", order);
 
-    return (
+    return (        
         <div className='px-5 lg:px-20'>
             <Grid container sx={{ justifyContent: "space-between" }}>
                 <Grid item xs={2.5}>
@@ -49,6 +51,7 @@ const Order = () => {
                     </div>
                 </Grid>
                 <Grid item xs={9}>
+                <GlobalLoader loading={loading} className='mt-[-800px]' />
                     <div className='space-y-5'>
                         {
                             order?.orders?.map((item) => <OrderCard item={item} />)

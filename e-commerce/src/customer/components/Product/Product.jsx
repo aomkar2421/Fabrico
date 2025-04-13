@@ -32,6 +32,7 @@ import {
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { findProducts } from "../../../State/Product/Action.js";
+import GlobalLoader from "../../Loader/GlobalLoader.jsx";
 
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
@@ -49,8 +50,8 @@ export default function Product() {
   const navigate = useNavigate();
   const param = useParams();
   const dispatch = useDispatch();
-  const {products} = useSelector(store=>store);
-
+  const products = useSelector((store) => store.products);
+  const loading = useSelector((store) => store.products.loading);
 
   const decodedQueryString = decodeURIComponent(location.search);
   const searchParamms = new URLSearchParams(decodedQueryString);
@@ -126,7 +127,8 @@ export default function Product() {
     disccount,
     sortValue,
     pageNumber,
-    stock
+    stock,
+    dispatch
   ])
 
 
@@ -393,6 +395,7 @@ export default function Product() {
               {/* Product grid */}
               <div className="lg:col-span-4 w-full">
                 <div className="flex flex-wrap justify-center bg-white py-5">
+                <GlobalLoader loading={loading}/>
                   {products.products && products.products?.content?.map((item) => (
                     <ProductCard product={item} />
                   ))}

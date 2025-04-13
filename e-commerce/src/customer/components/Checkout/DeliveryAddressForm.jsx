@@ -1,16 +1,20 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import AddressCard from "../AddressCard/AddressCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createOrder } from "../../../State/Order/Action";
 import { getAddressByUser } from "../../../State/Address/Action";
+import GlobalLoader from "../../../Admin/GlobalLoader";
+import ButtonLoader from "../../Loader/ButtonLoader";
 
 const DeliveryAddressForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { address } = useSelector((store) => store);
+  const address = useSelector((store) => store.address);
+  const loading = useSelector((store) => store.address.loading);
+  const [buttonLoader, setButtonLoader] = useState(false);
 
   React.useEffect(() => {
     dispatch(getAddressByUser());
@@ -19,8 +23,48 @@ const DeliveryAddressForm = () => {
   // console.log("CURRENT ORDER BY ID FRONTEND ", order);
   console.log("ALL USER ADRES FRONT END ", address);
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Handle Submit");
+  //   const data = new FormData(e.currentTarget);
+
+  //   const newAddress = {
+  //     firstName: data.get("firstName"),
+  //     lastName: data.get("lastName"),
+  //     streetAddress: data.get("address"),
+  //     city: data.get("city"),
+  //     state: data.get("state"),
+  //     zipCode: data.get("zip"),
+  //     mobile: data.get("phoneNumber"),
+  //   };
+
+  //   console.log("ADDRESS :", newAddress);
+
+  //   const orderData = { newAddress, navigate };
+  //   dispatch(createOrder(orderData));
+  // };
+
+  // const handleExistingAddress = (selectedAddress) => {
+  //   console.log("Selected existing address:", selectedAddress);
+
+  //   const address = {
+  //     firstName: selectedAddress.firstName,
+  //     lastName: selectedAddress.lastName,
+  //     streetAddress: selectedAddress.streetAddress,
+  //     city: selectedAddress.city,
+  //     state: selectedAddress.state,
+  //     zipCode: selectedAddress.zipCode,
+  //     mobile: selectedAddress.mobile,
+  //   };
+  //   console.log("=== FIANL SELECTED ADDRESS =====", address);
+  //   const orderData = { address: address, navigate };
+  //   dispatch(createOrder(orderData));
+  // };
+
+  // handleSubmit method
   const handleSubmit = (e) => {
     e.preventDefault();
+    setButtonLoader(true);
     console.log("Handle Submit");
     const data = new FormData(e.currentTarget);
 
@@ -34,13 +78,16 @@ const DeliveryAddressForm = () => {
       mobile: data.get("phoneNumber"),
     };
 
-    console.log("ADDRESS :", address);
+    console.log("ADDRESS:", address);
 
+    // Pass address directly
     const orderData = { address, navigate };
     dispatch(createOrder(orderData));
   };
 
+  // handleExistingAddress method
   const handleExistingAddress = (selectedAddress) => {
+    setButtonLoader(true);
     console.log("Selected existing address:", selectedAddress);
 
     const address = {
@@ -52,8 +99,11 @@ const DeliveryAddressForm = () => {
       zipCode: selectedAddress.zipCode,
       mobile: selectedAddress.mobile,
     };
-    console.log("=== FIANL SELECTED ADDRESS =====", address);
-    const orderData = { address: address, navigate };
+
+    console.log("=== FINAL SELECTED ADDRESS =====", address);
+
+    // Pass address directly with the same structure
+    const orderData = { address, navigate };
     dispatch(createOrder(orderData));
   };
 
@@ -69,14 +119,25 @@ const DeliveryAddressForm = () => {
           {address?.addresses.map((item, index) => (
             <div key={index} className="p-5 py-7 border-b cursor-pointer">
               <AddressCard address={item} />
-              <Button
-                sx={{ mt: 2, bgcolor: "RGB(145 85 253)", color: "white" }}
-                size="large"
-                variant="contained"
-                onClick={() => handleExistingAddress(item)}
-              >
-                Deliver Here
-              </Button>
+              {buttonLoader ? (
+                <Button
+                  sx={{ mt: 2, bgcolor: "RGB(145 85 253)", color: "white" }}
+                  size="large"
+                  variant="contained"
+                  disabled
+                >
+                  <ButtonLoader/>
+                </Button>
+              ) : (
+                <Button
+                  sx={{ mt: 2, bgcolor: "RGB(145 85 253)", color: "white" }}
+                  size="large"
+                  variant="contained"
+                  onClick={() => handleExistingAddress(item)}
+                >
+                  Deliver Here
+                </Button>
+              )}
             </div>
           ))}
         </Grid>
@@ -158,19 +219,35 @@ const DeliveryAddressForm = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Button
-                    sx={{
-                      py: 1.5,
-                      mt: 2,
-                      bgcolor: "RGB(145 85 253)",
-                      color: "white",
-                    }}
-                    size="large"
-                    varianr="contained"
-                    type="submit"
-                  >
-                    Deliver Here
-                  </Button>
+                  {buttonLoader ? (
+                    <Button
+                      sx={{
+                        py: 1.5,
+                        mt: 2,
+                        bgcolor: "RGB(145 85 253)",
+                        color: "white",
+                      }}
+                      size="large"
+                      varianr="contained"
+                      disabled
+                    >
+                      <ButtonLoader />
+                    </Button>
+                  ) : (
+                    <Button
+                      sx={{
+                        py: 1.5,
+                        mt: 2,
+                        bgcolor: "RGB(145 85 253)",
+                        color: "white",
+                      }}
+                      size="large"
+                      varianr="contained"
+                      type="submit"
+                    >
+                      Deliver Here
+                    </Button>
+                  )}
                 </Grid>
               </Grid>
             </form>

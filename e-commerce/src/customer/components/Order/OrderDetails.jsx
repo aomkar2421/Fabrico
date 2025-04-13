@@ -11,8 +11,9 @@ import { getAddressByOrder } from "../../../State/Address/Action";
 
 const OrderDetails = () => {
     const dispatch = useDispatch();
-    const { order } = useSelector((store) => store);
-    const { address } = useSelector((store) => store);
+    const order = useSelector((state) => state.order);
+    const address = useSelector((state) => state.address);
+    
     const params = useParams();
     const navigate = useNavigate();
     // console.log("ORDER ID IS ======", params.orderId);

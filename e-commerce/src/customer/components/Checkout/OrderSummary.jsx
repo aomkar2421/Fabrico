@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AddressCard from '../AddressCard/AddressCard'
 import { Button } from '@mui/material'
 import CartItem from '../Cart/CartItem'
@@ -7,20 +7,24 @@ import { useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { getOrderById } from '../../../State/Order/Action'
 import { createPayment } from '../../../State/Payment/Action'
+import GlobalLoader from '../../../Admin/GlobalLoader'
+import ButtonLoader from '../../Loader/ButtonLoader'
 
 const OrderSummary = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const {order} = useSelector(store=>store);
+  const order = useSelector((store)=>store.order);
   const searchParams = new URLSearchParams(location.search);
   const orderId = searchParams.get("order_id");
+  const [buttonLoader, setButtonLoader] = useState(false);
 
   useEffect( () => {
     console.log("============ORDER=========", order);
     dispatch(getOrderById(orderId));
-  }, [orderId])
+  }, [dispatch, orderId])
 
   const handleCheckout = () =>{
+    setButtonLoader(true);
     dispatch(createPayment(orderId));
   }
 
@@ -62,14 +66,29 @@ const OrderSummary = () => {
                   <span>Total Amount</span>
                   <span>₹{order.order?.totalDiscountedPrice}</span>
                 </div>
-                <Button
-                  className='w-full'
-                  variant="contained"
-                  sx={{ px: "2rem", py: "1rem", bgcolor: "#4545e7", mt: "2rem" }}
-                  onClick={handleCheckout}
-                >
-                  Checkout
-                </Button>
+                {
+                  buttonLoader?
+                  (
+                    <Button
+                    className='w-full'
+                    variant="contained"
+                    sx={{ px: "2rem", py: "1rem", bgcolor: "#4545e7", mt: "2rem" }}
+                    disabled
+                  >
+                    <ButtonLoader/>
+                  </Button>
+                  ):
+                  (
+                    <Button
+                    className='w-full'
+                    variant="contained"
+                    sx={{ px: "2rem", py: "1rem", bgcolor: "#4545e7", mt: "2rem" }}
+                    onClick={handleCheckout}
+                  >
+                    Checkout
+                  </Button>
+                  )
+                }
               </div>
             </div>
           </div>

@@ -20,6 +20,7 @@ import { createReview, getReviewById } from "../../../State/Review/Action.js";
 import { createRating, getRatingById } from "../../../State/Rating/Action.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import GlobalLoader from "../../Loader/GlobalLoader.jsx";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -80,14 +81,18 @@ export default function ProductDetails() {
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
-  const { products } = useSelector((store) => store);
+  const products = useSelector((store) => store.products);
   const [reviewData, setReviewData] = useState("");
   const [ratingData, setRatingData] = useState(0);
   const productId = params.productId;
-  
+
   // const { adminOrder } = useSelector((store) => store);
-  const { reviews } = useSelector((store) => store);
-  const { ratings } = useSelector((store) => store);
+  const reviews = useSelector((store) => store.reviews);
+  const ratings = useSelector((store) => store.ratings);
+  const loading = useSelector((store) => store.ratings.loading);
+  
+  const token = localStorage.getItem("jwt");
+  const isLoggedIn = !!token; // true if token exists
 
   // console.log(
   //   "============== REVIEWS DATA USING SELECTOR ====================",
@@ -98,6 +103,11 @@ export default function ProductDetails() {
   //   ratings
   // );
 
+  // console.log("====JWT=====",localStorage.getItem("jwt"));
+  // if (localStorage.getItem("jwt")) {
+  //   console.log("IF =======", " ====USER LOGGED IN==========");
+  // }
+  
   // const finalRatings = ratings?.rating;
   // console.log("====FINAL RATINGS=========", finalRatings);
   // const ratingValues = finalRatings.map((item) => item.rating);
@@ -128,7 +138,7 @@ export default function ProductDetails() {
   }, [params.productId, dispatch]);
 
   useEffect(() => {
-    console.log("Product ID:", params.productId);
+    // console.log("Product ID:", params.productId);
     dispatch(getReviewById(params.productId));
     dispatch(getRatingById(params.productId));
   }, [params.productId, dispatch]);
@@ -144,7 +154,6 @@ export default function ProductDetails() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log("=============REVIEW===============", reviewData);
-
     const productId = params.productId;
 
     await dispatch(
@@ -174,17 +183,14 @@ export default function ProductDetails() {
 
     // console.log("RATING ADDED SUCCESSFULLY");
     setRatingData(0);
-    // toast.success("Rating Added Succesfully");
+    toast.success("Rating Added Succesfully");
   };
-
 
   return (
     <div className="bg-white lg:px-20">
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
-          <ol
-            className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
-          >
+          <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             {product.breadcrumbs.map((breadcrumb) => (
               <li key={breadcrumb.id}>
                 <div className="flex items-center">
@@ -230,7 +236,7 @@ export default function ProductDetails() {
               />
             </div>
 
-            <div className="flex flex-wrap space-x-5 justify-center mt-6">
+            {/* <div className="flex flex-wrap space-x-5 justify-center mt-6">
               {product.images.map((item) => (
                 <div className=" overflow-hidden rounded-lg max-w-[6rem] max-h-[6rem]">
                   <img
@@ -240,7 +246,7 @@ export default function ProductDetails() {
                   />
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Product info */}
@@ -274,7 +280,9 @@ export default function ProductDetails() {
               <div className="mt-6">
                 <div className="flex items-center space-x-3">
                   <Rating name="read-only" value={averageRating} readOnly />
-                  <p className="opacity-50 text-sm">{totalRatingCount} Ratings</p>
+                  <p className="opacity-50 text-sm">
+                    {totalRatingCount} Ratings
+                  </p>
                   <p className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
                     {totalReviewCount} Reviews
                   </p>
@@ -339,13 +347,20 @@ export default function ProductDetails() {
                   </fieldset>
                 </div>
 
-                <Button
-                  onClick={handleAddToCart}
-                  variant="contained"
-                  sx={{ px: "2rem", py: "1rem", bgcolor: "blue", mt: "2rem" }}
-                >
-                  Add To Cart
-                </Button>
+                {!isLoggedIn && (
+                  <p className="text-black bg-slate-200 rounded-sm mb-5 text-center px-5 py-5 mt-5 font-bold text-2xl">
+                    Please log in to buy this product.
+                  </p>
+                )}
+                {isLoggedIn && (
+                  <Button
+                    onClick={handleAddToCart}
+                    variant="contained"
+                    sx={{ px: "2rem", py: "1rem", bgcolor: "blue", mt: "2rem" }}
+                  >
+                    Add To Cart
+                  </Button>
+                )}
               </form>
             </div>
 
@@ -396,6 +411,7 @@ export default function ProductDetails() {
             <Grid container spacing={7}>
               <Grid item xs={7}>
                 <div className="space-y-5">
+                  <GlobalLoader loading={loading} />
                   {reviews?.reviews?.map((item) => (
                     <ProductReviewCard review={item} productId={productId} />
                   ))}
@@ -403,183 +419,75 @@ export default function ProductDetails() {
               </Grid>
 
               <Grid item xs={5}>
-                <div className="mt-5 w-full">
-                  <h1 className="font-bold text-2xl ">
-                    Post Your Review & Rating
-                  </h1>
-                  <form action="" onSubmit={handleSubmit}>
-                    <div className="h-auto bg-slate-100 rounded-md p-10 my-5 ">
-                      <div>
-                        <TextField
-                          fullWidth
-                          id="outline-multiline-static"
-                          label="Review"
-                          multiline
-                          name="review"
-                          rows={3}
-                          value={reviewData}
-                          onChange={(e) => setReviewData(e.target.value)}
-                        />
-                      </div>
-                      <div>
-                        <button
-                          type="submit"
-                          className="mt-5 bg-blue-700 w-32 h-14 rounded-md text-white font-semibold"
-                        >
-                          Submit Review
-                        </button>
-                      </div>
+                {!isLoggedIn && (
+                  <p className="text-black bg-slate-200 rounded-sm mb-5 text-center px-5 py-5 mt-5 font-bold text-2xl">
+                    Please log in to post your review and rating.
+                  </p>
+                )}
+
+                {isLoggedIn && (
+                  <>
+                    <div className="mt-5 w-full">
+                      <h1 className="font-bold text-2xl ">
+                        Post Your Review & Rating
+                      </h1>
+                      <form action="" onSubmit={handleSubmit}>
+                        <div className="h-auto bg-slate-100 rounded-md p-10 my-5 ">
+                          <div>
+                            <TextField
+                              fullWidth
+                              id="outline-multiline-static"
+                              label="Review"
+                              multiline
+                              name="review"
+                              rows={3}
+                              value={reviewData}
+                              onChange={(e) => setReviewData(e.target.value)}
+                            />
+                          </div>
+                          <div>
+                            <button
+                              type="submit"
+                              className="mt-5 bg-blue-700 w-32 h-14 rounded-md text-white font-semibold"
+                            >
+                              Submit Review
+                            </button>
+                          </div>
+                        </div>
+                      </form>
                     </div>
-                  </form>
-                </div>
 
-                <div className="mt-5 w-full">
-                  <h1 className="font-bold text-2xl ">Post Your Rating</h1>
-                  <form action="" onSubmit={handleRatingSubmit}>
-                    <div className="h-auto bg-slate-100 rounded-md p-10 my-5 ">
-                      <div>
-                        <Rating
-                          value={ratingData}
-                          onChange={(e) => setRatingData(e.target.value)}
-                          precision={0.5}
-                        />
-                      </div>
-                      <div>
-                        <button
-                          type="submit"
-                          className="mt-5 bg-blue-700 w-32 h-14 rounded-md text-white font-semibold"
-                        >
-                          Submit Rating
-                        </button>
-                      </div>
+                    <div className="mt-5 w-full">
+                      <h1 className="font-bold text-2xl ">Post Your Rating</h1>
+                      <form action="" onSubmit={handleRatingSubmit}>
+                        <div className="h-auto bg-slate-100 rounded-md p-10 my-5 ">
+                          <div>
+                            <Rating
+                              value={ratingData}
+                              onChange={(e) => setRatingData(e.target.value)}
+                              precision={0.5}
+                            />
+                          </div>
+                          <div>
+                            <button
+                              type="submit"
+                              className="mt-5 bg-blue-700 w-32 h-14 rounded-md text-white font-semibold"
+                            >
+                              Submit Rating
+                            </button>
+                          </div>
+                        </div>
+                      </form>
                     </div>
-                  </form>
-                </div>
+                  </>
+                )}
 
-                <h1 className="text-xl font-semibold pb-1">Product Ratings</h1>
-
-                <div className="flex items-center space-x-3">
-                  <Rating value={4.6} precision={0.5} readOnly />
-                  <p className="opacity-60 text-sm">54890 Ratings</p>
-                </div>
-
-                <Box className="mt-5">
-                  <Grid
-                    container
-                    justifyContent="center"
-                    alignItems="center"
-                    gap={2}
-                  >
-                    <Grid item xs={2}>
-                      <p className="">Excellent</p>
-                    </Grid>
-                    <Grid item xs={7}>
-                      <LinearProgress
-                        sx={{ bgcolor: "#d0d0d0", height: 7, borderRadius: 4 }}
-                        variant="determinate"
-                        value={40}
-                        color="success"
-                      />
-                    </Grid>
-                    <Grid item xs={2}>
-                      <p className="text-sm text-gray-500">40%</p>
-                    </Grid>
-                  </Grid>
-
-                  <Grid
-                    container
-                    justifyContent="center"
-                    alignItems="center"
-                    gap={2}
-                  >
-                    <Grid item xs={2}>
-                      <p className="">Very Good</p>
-                    </Grid>
-                    <Grid item xs={7}>
-                      <LinearProgress
-                        sx={{ bgcolor: "#d0d0d0", height: 7, borderRadius: 4 }}
-                        variant="determinate"
-                        value={20}
-                        color="success"
-                      />
-                    </Grid>
-                    <Grid item xs={2}>
-                      <p className="text-sm text-gray-500">20%</p>
-                    </Grid>
-                  </Grid>
-
-                  <Grid
-                    container
-                    justifyContent="center"
-                    alignItems="center"
-                    gap={2}
-                  >
-                    <Grid item xs={2}>
-                      <p className="">Good</p>
-                    </Grid>
-                    <Grid item xs={7}>
-                      <LinearProgress
-                        sx={{ bgcolor: "#d0d0d0", height: 7, borderRadius: 4 }}
-                        variant="determinate"
-                        value={10}
-                        color="success"
-                      />
-                    </Grid>
-                    <Grid item xs={2}>
-                      <p className="text-sm text-gray-500">10%</p>
-                    </Grid>
-                  </Grid>
-
-                  <Grid
-                    container
-                    justifyContent="center"
-                    alignItems="center"
-                    gap={2}
-                  >
-                    <Grid item xs={2}>
-                      <p className="">Average</p>
-                    </Grid>
-                    <Grid item xs={7}>
-                      <LinearProgress
-                        sx={{ bgcolor: "#d0d0d0", height: 7, borderRadius: 4 }}
-                        variant="determinate"
-                        value={20}
-                        color="success"
-                      />
-                    </Grid>
-                    <Grid item xs={2}>
-                      <p className="text-sm text-gray-500">20%</p>
-                    </Grid>
-                  </Grid>
-
-                  <Grid
-                    container
-                    justifyContent="center"
-                    alignItems="center"
-                    gap={2}
-                  >
-                    <Grid item xs={2}>
-                      <p className="">Poor</p>
-                    </Grid>
-                    <Grid item xs={7}>
-                      <LinearProgress
-                        sx={{ bgcolor: "#d0d0d0", height: 7, borderRadius: 4 }}
-                        variant="determinate"
-                        value={10}
-                        color="success"
-                      />
-                    </Grid>
-                    <Grid item xs={2}>
-                      <p className="text-sm text-gray-500">10%</p>
-                    </Grid>
-                  </Grid>
-                </Box>
               </Grid>
             </Grid>
           </div>
         </section>
 
-        {/* Similar Products */}
+        {/* Similar Products
         <section>
           <h1 className="my-10 font-semibold text-2xl">Similar Products</h1>
           <div className="flex flex-wrap space-y-5">
@@ -587,7 +495,7 @@ export default function ProductDetails() {
               <HomeSectionCard product={item} />
             ))}
           </div>
-        </section>
+        </section> */}
       </div>
     </div>
   );

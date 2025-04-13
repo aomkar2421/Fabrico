@@ -1,6 +1,36 @@
 import { api, API_BASE_URL } from "../../config/apiConfig";
 import { CREATE_PRODUCTS_FAILURE, CREATE_PRODUCTS_REQUEST, CREATE_PRODUCTS_SUCCESS, DELETE_PRODUCTS_FAILURE, DELETE_PRODUCTS_REQUEST, DELETE_PRODUCTS_SUCCESS, FIND_PRODUCT_BY_ID_FAILURE, FIND_PRODUCT_BY_ID_REQUEST, FIND_PRODUCT_BY_ID_SUCCESS, FIND_PRODUCTS_FAILURE, FIND_PRODUCTS_REQUEST, FIND_PRODUCTS_SUCCESS } from "./ActionType";
 
+// export const findProducts = (reqData) => async (dispatch) => {
+//   dispatch({ type: FIND_PRODUCTS_REQUEST });
+
+//   const {
+//     colors,
+//     sizes,
+//     minPrice,
+//     maxPrice,
+//     minDiscount,
+//     category,
+//     stock,
+//     sort,
+//     pageNumber,
+//     pageSize,
+//   } = reqData;
+
+//   try {
+//     const { data } = await api.get(
+//       `/api/products?color=${colors}&size=${sizes}&minPrice=${minPrice}&maxPrice=${maxPrice}&minDiscount=${minDiscount}&category=${category}&stock=${stock}&sort=${sort}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+//     );
+//     console.log("====PRODUCTS DATA==== :", data)
+//     dispatch({ type: FIND_PRODUCTS_SUCCESS, payload: data });
+//     return data;
+//   } catch (error) {
+//     dispatch({ type: FIND_PRODUCTS_FAILURE, payload: error.message });
+//     throw error;
+//   }
+// };
+
+import axios from 'axios';
 export const findProducts = (reqData) => async (dispatch) => {
   dispatch({ type: FIND_PRODUCTS_REQUEST });
 
@@ -18,13 +48,17 @@ export const findProducts = (reqData) => async (dispatch) => {
   } = reqData;
 
   try {
-    const { data } = await api.get(
-      `/api/products?color=${colors}&size=${sizes}&minPrice=${minPrice}&maxPrice=${maxPrice}&minDiscount=${minDiscount}&category=${category}&stock=${stock}&sort=${sort}&pageNumber=${pageNumber}&pageSize=${pageSize}`
-    );
-    console.log("====PRODUCTS DATA==== :", data)
+    // Create URL for product request
+    const url = `/api/products?color=${colors}&size=${sizes}&minPrice=${minPrice}&maxPrice=${maxPrice}&minDiscount=${minDiscount}&category=${category}&stock=${stock}&sort=${sort}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    
+    // Use regular axios for public endpoints if needed
+    const { data } = await axios.get(API_BASE_URL + url);
+    
+    console.log("====PRODUCTS DATA==== :", data);
     dispatch({ type: FIND_PRODUCTS_SUCCESS, payload: data });
     return data;
   } catch (error) {
+    console.error("Product fetch error:", error.response || error);
     dispatch({ type: FIND_PRODUCTS_FAILURE, payload: error.message });
     throw error;
   }

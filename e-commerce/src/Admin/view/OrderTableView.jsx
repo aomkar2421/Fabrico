@@ -23,11 +23,13 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import GlobalLoader from "../GlobalLoader";
 
 const OrdersTableView = () => {
   const dispatch = useDispatch();
 
-  const { adminOrder } = useSelector((store) => store);
+  const adminOrder = useSelector((store) => store.adminOrder);
+  const loading = useSelector((store) => store.adminOrder.loading);
 
   // console.log("ADMIN ORDERS -----", adminOrder);
 
@@ -71,10 +73,13 @@ const OrdersTableView = () => {
             </TableHead>
             <TableBody className="bg-white transition-colors dark:bg-slate-700">
               {adminOrder?.orders?.slice(0,5).map((item, index) => (
+                <>
+                <GlobalLoader loading={loading}/>
                 <TableRow
                   key={item.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
+                  
                   <TableCell className="text-slate-900 transition-colors dark:text-slate-50" align="left">
                     <AvatarGroup max={3} sx={{ justifyContent: "start" }}>
                       {item.orderltems.map((orderItem) => (
@@ -113,6 +118,7 @@ const OrdersTableView = () => {
                   </TableCell>
 
                 </TableRow>
+                </>
               ))}
             </TableBody>
           </Table>
