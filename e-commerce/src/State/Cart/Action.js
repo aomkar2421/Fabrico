@@ -14,17 +14,20 @@ export const getCart = () =>async (dispatch)=>{
 } 
 
 
-export const addItemToCart = (reqData) =>async (dispatch)=>{
-    dispatch({type:ADD_ITEM_TO_CART_REQUEST});
+export const addItemToCart = (reqData) => async (dispatch) => {
+    dispatch({type: ADD_ITEM_TO_CART_REQUEST});
 
     try {
-        const {data} = await api.put("/api/cart/add",reqData);
-        dispatch({type:ADD_ITEM_TO_CART_SUCCESS, payload:data})
-        console.log("item added to cart ", data)
+        const {data} = await api.put("/api/cart/add", reqData);
+        dispatch({type: ADD_ITEM_TO_CART_SUCCESS, payload: data});
+        console.log("item added to cart ", data);
+        
+        // Fetch updated cart data immediately after adding item
+        dispatch(getCart());
     } catch (error) {
-        dispatch({type:ADD_ITEM_TO_CART_FAILURE, payload:error.message})
+        dispatch({type: ADD_ITEM_TO_CART_FAILURE, payload: error.message});
     }
-} 
+}
 
 
 export const removeCartItem = (cartItemId) => async (dispatch)=>{

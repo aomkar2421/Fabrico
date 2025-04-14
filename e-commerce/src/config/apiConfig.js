@@ -16,7 +16,7 @@
 
 import axios from 'axios';
 
-export const API_BASE_URL = "http://35.175.218.197:8080"
+export const API_BASE_URL = "http://13.218.81.219:8080"
 // export const API_BASE_URL = "http://localhost:8080"
 
 // Create a function to get the current JWT token

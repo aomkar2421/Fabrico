@@ -18,6 +18,7 @@ const initialState = {
     loading: false,
     error: null,
     cartItems: [],
+    cartUpdated: false
 };
 
 export const cartReducer = (state = initialState, action) => {
@@ -27,6 +28,7 @@ export const cartReducer = (state = initialState, action) => {
         case ADD_ITEM_TO_CART_SUCCESS:
             return {
                 ...state,
+                cartUpdated: true,
                 cartItems: [...state.cartItems, action.payload.cartItems],
                 loading: false,
             };
@@ -37,6 +39,7 @@ export const cartReducer = (state = initialState, action) => {
         case GET_CART_SUCCESS:
             return {
                 ...state,
+                cartUpdated: false,
                 cartItems: action.payload.cartItems,
                 cart: action.payload,
                 loading: false,
@@ -48,13 +51,15 @@ export const cartReducer = (state = initialState, action) => {
             return { ...state, loading: true, error: null };
         case REMOVE_CART_ITEM_SUCCESS:
             return {
-                ...state,
+                ...state, 
+                cartUpdated: true,
                 deleteCartItem : action.payload,
                 loading: false,
             };
         case UPDATE_CART_ITEM_SUCCESS:
             return {
                 ...state,
+                cartUpdated : true,
                 updateCartItem : action.payload,
                 loading: false,
             };
